@@ -1,0 +1,3 @@
+[submodule "external/liburing"]
+	path = external/liburing
+	url = https://github.com/axboe/liburing.git
