@@ -13,7 +13,7 @@ kotlin {
 
     sourceSets {
         linuxX64Main.dependencies {
-            implementation(project(":uring"))
+            implementation(project(":linux-uring"))
         }
     }
 }
