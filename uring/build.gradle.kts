@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.maven.publish)
 }
 
 val liburingDir = rootProject.layout.projectDirectory.dir("external/liburing")
@@ -13,6 +14,7 @@ val buildLiburing by tasks.registering(Exec::class) {
         "-lc",
         """
         ./configure --prefix=${liburingInstallDir.asFile.absolutePath}
+        make -j$(nproc)
 
         mkdir -p ${liburingInstallDir.asFile.absolutePath}/include
         mkdir -p ${liburingInstallDir.asFile.absolutePath}/lib
@@ -60,4 +62,36 @@ kotlin {
 
 tasks.matching { it.name.startsWith("cinteropUring") }.configureEach {
     dependsOn(generateUringDef)
+}
+
+mavenPublishing {
+    signAllPublications()
+    publishToMavenCentral()
+
+    pom {
+        name.set("io-uring-kotlin")
+        description.set("Kotlin Native klib for io-uring")
+        url.set("https://github.com/andannn/RaylibKt")
+
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+
+        developers {
+            developer {
+                id.set("andannn")
+                name.set("Andannn")
+            }
+        }
+
+        scm {
+            url.set("https://github.com/kio-labs/io-uring-kotlin.git")
+            connection.set("scm:git:git://github.com/kio-labs/io-uring-kotlin.git")
+            developerConnection.set("scm:git:ssh://git@github.com/kio-labs/io-uring-kotlin.git")
+        }
+    }
 }
