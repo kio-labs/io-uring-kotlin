@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "io-uring-kotlin"
 include(":uring")
+include(":uring-example")
