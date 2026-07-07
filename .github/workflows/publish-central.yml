@@ -2,8 +2,9 @@ name: Publish to Maven Central
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -27,7 +28,7 @@ jobs:
         with:
           gradle-version: wrapper
 
-      - name: Build
+      - name: Build Test
         run: ./gradlew :uring:build
 
 #      - name: Publish and Release gradle plugin to Maven Central
