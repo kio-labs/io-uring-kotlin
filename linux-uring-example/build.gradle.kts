@@ -14,9 +14,8 @@ kotlin {
         }
     }
 
-
     sourceSets {
-        linuxX64Main.dependencies {
+        linuxMain.dependencies {
             implementation(project(":linux-uring"))
         }
     }
