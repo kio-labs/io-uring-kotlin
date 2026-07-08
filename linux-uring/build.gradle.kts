@@ -47,8 +47,11 @@ val generateUringDef by tasks.registering {
 }
 
 kotlin {
-    linuxX64 {
-        compilations.getByName("main") {
+    listOf(
+        linuxX64(),
+        linuxArm64()
+    ).forEach {
+        it.compilations.getByName("main") {
             cinterops {
                 val uring by creating {
                     defFile(generateUringDef.map {

@@ -3,13 +3,17 @@ plugins {
 }
 
 kotlin {
-    linuxX64 {
-        binaries {
+    listOf(
+        linuxX64(),
+        linuxArm64()
+    ).forEach {
+        it.binaries {
             executable {
                 entryPoint("main")
             }
         }
     }
+
 
     sourceSets {
         linuxX64Main.dependencies {
