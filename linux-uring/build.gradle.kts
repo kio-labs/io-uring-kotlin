@@ -35,10 +35,15 @@ val generateUringDef by tasks.registering {
         generatedUringDef.get().asFile.parentFile.mkdirs()
         generatedUringDef.get().asFile.writeText(
             """
-            headers = liburing.h
+            headers = uring_wrapper.h
             package = linux.uring
 
-            compilerOpts = -I${liburingInstallDir.dir("include").asFile.absolutePath} -I/usr/include -I/usr/include/x86_64-linux-gnu
+            compilerOpts = \
+                -I${project.layout.projectDirectory.dir("src/nativeInterop/cinterop").asFile.absolutePath} \
+                -I${liburingInstallDir.dir("include").asFile.absolutePath} \
+                -I/usr/include \
+                -I/usr/include/x86_64-linux-gnu
+
             staticLibraries = liburing.a
             libraryPaths = ${liburingInstallDir.dir("lib").asFile.absolutePath}
             """.trimIndent()
