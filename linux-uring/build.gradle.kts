@@ -46,6 +46,8 @@ val generateUringDef by tasks.registering {
 
             staticLibraries = liburing.a
             libraryPaths = ${liburingInstallDir.dir("lib").asFile.absolutePath}
+            
+            noStringConversion = io_uring_prep_statx io_uring_prep_open
             """.trimIndent()
         )
     }
